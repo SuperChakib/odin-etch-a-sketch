@@ -11,12 +11,15 @@
     <div id="interactive">
         <div id="buttons">
             <button id="reset">Reset</button>
-            <button id="blackWhite">B&W</button>
-            <button id="rainbow">Rainbow</button>
-            <button id="darker">Darker</button>
-            <button id="eraser">Erase</button>
+            <div id="monochrome">
+                <input type="color" value="#000000" name="monoSelector" id="monoSelector">
+                <button id="blackWhite" class="modLine">Monochrome</button>
+            </div>
+            <button id="rainbow" class="modLine">Rainbow</button>
+            <button id="darker" class="modLine">Darker</button>
+            <button id="eraser" class="modLine">Erase</button>
             <div id="size">
-                <input type="range" min="0" max="100" value="16" name="sizeSelector" id="sizeSelector">
+                <input type="range" min="1" max="100" value="16" name="sizeSelector" id="sizeSelector">
                 <p><span class='sizeValue'></span> x <span class='sizeValue'></span></p>
             </div>
         </div>

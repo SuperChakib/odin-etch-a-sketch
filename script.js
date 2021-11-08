@@ -1,8 +1,10 @@
 let resetBtn = document.querySelector("#reset");
-let blackWhiteBtn = document.querySelector("#blackWhite");
+let monoSelector = document.querySelector("#monoSelector");
+let monochromeBtn = document.querySelector("#blackWhite");
 let rainbowBtn = document.querySelector("#rainbow");
 let darkerBtn = document.querySelector("#darker");
 let eraserBtn = document.querySelector("#eraser");
+let allBtns = document.querySelectorAll(".modLine");
 let sizeSelector = document.querySelector("#sizeSelector");
 let sizeValue = document.querySelectorAll(".sizeValue");
 let container = document.querySelector("div.container");
@@ -25,12 +27,13 @@ function drawTable(size) {
 }
 function resetTable() {
   size = prompt("What dimensions?");
-  size > 100
-    ? alert("Dimensions are too big! Do not exceed 100!")
-    : drawTable(size);
+  size >= 1 && size <= 100
+    ? drawTable(size)
+    : alert("Please enter a dimension between 1 and 100!");
 }
-function blackLine(e) {
-  e.target.style.backgroundColor = "rgb(0, 0, 0)";
+let monoColor = "rgb(0, 0, 0)";
+function monoLine(e) {
+  e.target.style.backgroundColor = monoColor;
 }
 function rainbowLine(e) {
   e.target.removeAttribute("data-darker-offset");
@@ -54,19 +57,26 @@ function eraserLine(e) {
   e.target.style.backgroundColor = "rgb(255, 255, 255)";
 }
 
-let drawOption = "B&W";
+let drawOption = "mono";
 function selectLine(e) {
-  if (drawOption === "B&W") blackLine(e);
+  if (drawOption === "mono") monoLine(e);
   else if (drawOption === "rainbow") rainbowLine(e);
   else if (drawOption === "darker") darkerLine(e);
   else if (drawOption === "eraser") eraserLine(e);
 }
 
+function activeBtn(e) {
+  allBtns.forEach((button) => button.classList.remove("active-line"));
+  e.target.classList.add("active-line");
+}
+
 resetBtn.addEventListener("click", resetTable);
-blackWhiteBtn.addEventListener("click", () => (drawOption = "B&W"));
+monoSelector.addEventListener("change", (e) => (monoColor = e.target.value));
+monochromeBtn.addEventListener("click", () => (drawOption = "mono"));
 rainbowBtn.addEventListener("click", () => (drawOption = "rainbow"));
 darkerBtn.addEventListener("click", () => (drawOption = "darker"));
 eraserBtn.addEventListener("click", () => (drawOption = "eraser"));
+allBtns.forEach((button) => button.addEventListener("click", activeBtn));
 sizeSelector.addEventListener("change", (e) => drawTable(e.target.value));
 sizeSelector.addEventListener("input", (e) =>
   sizeValue.forEach((value) => (value.textContent = e.target.value))
