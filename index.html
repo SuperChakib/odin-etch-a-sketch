@@ -7,10 +7,20 @@
     <script src="./script.js" defer></script>
 </head>
 <body>
-    <button id="reset">Reset</button>
-    <button id="blackWhite">B&W</button>
-    <button id="rainbow">Rainbow</button>
-    <button id="darker">Darker</button>
-    <div class="container"></div>
+    <h1>Etch-a-Sketch</h1>
+    <div id="interactive">
+        <div id="buttons">
+            <button id="reset">Reset</button>
+            <button id="blackWhite">B&W</button>
+            <button id="rainbow">Rainbow</button>
+            <button id="darker">Darker</button>
+            <button id="eraser">Erase</button>
+            <div id="size">
+                <input type="range" min="0" max="100" value="16" name="sizeSelector" id="sizeSelector">
+                <p><span class='sizeValue'></span> x <span class='sizeValue'></span></p>
+            </div>
+        </div>
+        <div class="container"></div>
+    </div>
 </body>
 </html>

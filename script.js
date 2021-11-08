@@ -2,17 +2,26 @@ let resetBtn = document.querySelector("#reset");
 let blackWhiteBtn = document.querySelector("#blackWhite");
 let rainbowBtn = document.querySelector("#rainbow");
 let darkerBtn = document.querySelector("#darker");
+let eraserBtn = document.querySelector("#eraser");
+let sizeSelector = document.querySelector("#sizeSelector");
+let sizeValue = document.querySelectorAll(".sizeValue");
 let container = document.querySelector("div.container");
 let size = 16;
 function drawTable(size) {
   container.innerHTML = "";
   for (let i = 0; i < size * size; i++) {
     let square = document.createElement("div");
-    square.style.width = `${500 / size}px`;
-    square.style.height = `${500 / size}px`;
+    square.style.width = `${600 / size}px`;
+    square.style.height = `${600 / size}px`;
     square.classList = "square";
+    square.style.backgroundColor = "rgb(255, 255, 255)";
     container.appendChild(square);
   }
+  container.childNodes.forEach((elem) =>
+    elem.addEventListener("mouseover", selectLine)
+  );
+  sizeSelector.value = size;
+  sizeValue.forEach((value) => (value.textContent = size));
 }
 function resetTable() {
   size = prompt("What dimensions?");
@@ -22,7 +31,6 @@ function resetTable() {
 }
 function blackLine(e) {
   e.target.style.backgroundColor = "rgb(0, 0, 0)";
-  e.target.style.borderColor = "white";
 }
 function rainbowLine(e) {
   e.target.removeAttribute("data-darker-offset");
@@ -42,19 +50,27 @@ function darkerLine(e) {
     2
   )})`;
 }
+function eraserLine(e) {
+  e.target.style.backgroundColor = "rgb(255, 255, 255)";
+}
 
 let drawOption = "B&W";
 function selectLine(e) {
   if (drawOption === "B&W") blackLine(e);
   else if (drawOption === "rainbow") rainbowLine(e);
   else if (drawOption === "darker") darkerLine(e);
+  else if (drawOption === "eraser") eraserLine(e);
 }
 
 resetBtn.addEventListener("click", resetTable);
 blackWhiteBtn.addEventListener("click", () => (drawOption = "B&W"));
 rainbowBtn.addEventListener("click", () => (drawOption = "rainbow"));
 darkerBtn.addEventListener("click", () => (drawOption = "darker"));
+eraserBtn.addEventListener("click", () => (drawOption = "eraser"));
+sizeSelector.addEventListener("change", (e) => drawTable(e.target.value));
+sizeSelector.addEventListener("input", (e) =>
+  sizeValue.forEach((value) => (value.textContent = e.target.value))
+);
 //blackWhiteBtn.classList.add("active-line");
-container.addEventListener("mouseover", selectLine);
 
 drawTable(size);
